@@ -3,29 +3,86 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="~/Content/bootstrap.css" rel="stylesheet"/>
-    <link href="~/Content/bootstrap-theme.css" rel="stylesheet"/>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
     <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
+    <link href="~/Content/shop-homepage.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
 </head>
 <body>
     <div class="container">
-        <div class="navbar navbar-inverse" role="navigation">
-            <a class="navbar-brand" href="#">
-                <span class="hidden-xs">Fashion Shop - The Latest Clothes and Fashion online</span>
-                <div class="visible-xs">Fashion Shop -</div>
-                <div class="visible-xs">Fashion online</div>
-            </a>
-            @Html.Action("Summary", "Cart")
-        </div>
+        @*<div class="navbar navbar-inverse" role="navigation">
+                <a class="navbar-brand" href="#">
+                    <span class="hidden-xs">Fashion Shop - The Latest Clothes and Fashion online</span>
+                    <div class="visible-xs">Fashion Shop -</div>
+                    <div class="visible-xs">Fashion online</div>
+                </a>
+                @Html.Action("Summary", "Cart")
+            </div>*@
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand hidden-xs" href="#">Fashion Shop - The Latest Clothes and Fashion online</a>
+                    <a class="navbar-brand visible-xs" href="#">Fashion Shop - </a>
+                    <a class="navbar-brand visible-xs" href="#">Fashion online</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        @*<li>
+                                <a href="#">About</a>
+                            </li>
+                            <li>
+                                <a href="#">Services</a>
+                            </li>
+                            <li>
+                                <a href="#">Contact</a>
+                            </li>*@
+                    </ul>
+                    @Html.Action("Summary", "Cart")
+                </div>
+
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
         <div class="row panel">
             <div id="categories" class="col-sm-3 hidden-xs">
                 @Html.Action("Menu", "Nav")
             </div>
+
             <div class="col-xs-12 col-sm-8">
                 @RenderBody()
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Vladislav Guleaev USM 2016</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
 </body>
 </html>

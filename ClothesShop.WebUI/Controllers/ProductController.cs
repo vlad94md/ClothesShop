@@ -12,7 +12,7 @@ namespace ClothesShop.WebUI.Controllers
     public class ProductController : Controller
     {
         private IProductRepository repository;
-        public int pageSize = 4;
+        public int pageSize = 6;
 
         public ProductController(IProductRepository repos)
         {
