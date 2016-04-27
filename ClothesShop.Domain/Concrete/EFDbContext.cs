@@ -10,6 +10,11 @@ namespace ClothesShop.Domain.Concrete
 {
     public class EFDbContext : DbContext
     {
+        public EFDbContext()
+        {
+            Database.SetInitializer<EFDbContext>(new DropCreateDatabaseIfModelChanges<EFDbContext>());
+        }
+
         public DbSet<Product> Products { get; set; }
     }
 }

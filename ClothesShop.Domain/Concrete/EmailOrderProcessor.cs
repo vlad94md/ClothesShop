@@ -52,20 +52,20 @@ namespace ClothesShop.Domain.Concrete
                 }
 
                 StringBuilder body = new StringBuilder()
-                    .AppendLine("Новый заказ обработан")
+                    .AppendLine("New order proccessed")
                     .AppendLine("---")
-                    .AppendLine("Товары:");
+                    .AppendLine("Goods:");
 
                 foreach (var line in cart.Lines)
                 {
                     var subtotal = line.Item.Price * line.Quantity;
-                    body.AppendFormat("{0} x {1} (итого: {2:c}",
+                    body.AppendFormat("{0} x {1} (total: {2:c}",
                         line.Quantity, line.Item.Name, subtotal);
                 }
 
-                body.AppendFormat("Общая стоимость: {0:c}", cart.ComputeTotalValue())
+                body.AppendFormat("Total: {0:c}", cart.ComputeTotalValue())
                     .AppendLine("---")
-                    .AppendLine("Доставка:")
+                    .AppendLine("Delivery:")
                     .AppendLine(shippingInfo.Name)
                     .AppendLine(shippingInfo.Line1)
                     .AppendLine(shippingInfo.Line2 ?? "")
@@ -73,13 +73,13 @@ namespace ClothesShop.Domain.Concrete
                     .AppendLine(shippingInfo.City)
                     .AppendLine(shippingInfo.Country)
                     .AppendLine("---")
-                    .AppendFormat("Подарочная упаковка: {0}",
-                        shippingInfo.GiftWrap ? "Да" : "Нет");
+                    .AppendFormat("Gift Wrap: {0}",
+                        shippingInfo.GiftWrap ? "Yes" : "No");
 
                 MailMessage mailMessage = new MailMessage(
                                        emailSettings.MailFromAddress,	// От кого
                                        emailSettings.MailToAddress,		// Кому
-                                       "Новый заказ отправлен!",		// Тема
+                                       "New order!",		            // Тема
                                        body.ToString()); 				// Тело письма
 
                 if (emailSettings.WriteAsFile)

@@ -20,9 +20,9 @@
             <tr>
                 <td class="text-center">@line.Quantity</td>
                 <td class="text-left">@line.Item.Name</td>
-                <td class="text-right">@line.Item.Price.ToString("# eur")</td>
+                <td class="text-right">@line.Item.Price.ToString("# €")</td>
                 <td class="text-right">
-                    @((line.Quantity * line.Item.Price).ToString("# eur"))
+                    @((line.Quantity * line.Item.Price).ToString("# €"))
                 </td>
                 <td>
                     @using (Html.BeginForm("RemoveFromCart", "Cart"))
@@ -39,7 +39,7 @@
         <tr>
             <td colspan="3" class="text-right">Total:</td>
             <td class="text-right">
-                @Model.Cart.ComputeTotalValue().ToString("# eur")
+                @Model.Cart.ComputeTotalValue().ToString("# €")
             </td>
         </tr>
     </tfoot>
@@ -47,5 +47,5 @@
 
 <div class="text-center">
     <a class="btn btn-primary" href="@Model.ReturnUrl">Back To Shoping</a>
-    @Html.ActionLink("Оформить заказ", "Checkout", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Make an order", "Checkout", null, new { @class = "btn btn-primary" })
 </div>

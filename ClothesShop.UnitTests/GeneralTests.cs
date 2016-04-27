@@ -13,7 +13,7 @@ using Moq;
 namespace ClothesShop.UnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class GeneralTests
     {
         [TestMethod]
         public void Can_Paginate()
