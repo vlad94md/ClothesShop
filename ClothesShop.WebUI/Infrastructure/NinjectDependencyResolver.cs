@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using ClothesShop.Domain.Abstract;
 using ClothesShop.Domain.Entities;
 using ClothesShop.Domain.Concrete;
+using ClothesShop.WebUI.Infrastructure.Concrete;
 using Moq;
 using Ninject;
 
@@ -45,6 +46,8 @@ namespace ClothesShop.WebUI.Infrastructure
 
             kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>()
                 .WithConstructorArgument("settings", emailSettings);
+
+            kernel.Bind<IAuthProvider>().To<FormAuthProvider>();
         }
     }
 }

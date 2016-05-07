@@ -8,6 +8,7 @@ using ClothesShop.Domain.Entities;
 
 namespace ClothesShop.WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private IProductRepository repository;
