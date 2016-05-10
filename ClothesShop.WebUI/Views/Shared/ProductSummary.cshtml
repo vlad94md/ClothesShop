@@ -1,46 +1,32 @@
 ﻿@model ClothesShop.Domain.Entities.Product
 
-@*<div class="well">
-    <h3>
-        <strong>@Model.Name</strong>
-        <span class="pull-right label label-primary"> @Model.Price.ToString("# €")</span>
-    </h3>
-
-    @using (Html.BeginForm("AddToCart", "Cart"))
-    {
-        <div class="pull-right">
-            @Html.HiddenFor(x => x.Id)
-            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-            <input type="submit" class="btn btn-success" value="Add to Cart"/>
-        </div>
-    }
-
-    <span class="lead">@Model.Description</span>
-</div>*@
-
-
 <div class="col-sm-4 col-lg-4 col-md-4">
     <div class="thumbnail">
-        <img src="~/Content/placeholder320.png" alt="">
-        @*<img src="@Url.Action("GetImage", "Product",
-                new { Model.Id })" alt="">*@
+        @*<img src="~/Content/placeholder320.png" alt="">*@
+        <img src="@Url.Action("GetImage", "Product",
+                new { Model.Id })" alt="">
         <div class="caption">
-            <h4 class="pull-right">@Model.Price.ToString("# €")</h4>
-            <h4>
+            @*<h4 class="pull-right">@Model.Price.ToString("# €")</h4>*@
+            <p class="lead text-center">
                 <a href="#">@Model.Name</a>
-            </h4>
-            <p>@Model.Description</p>
+            </p>
+            @*<h3 class="text-center strong">@Model.Price.ToString("# €")</h3>*@
+            @*<p>@Model.Description</p>*@
         </div>
-        <div class="ratings">
-            <p class="pull-right">15 reviews</p>
+        <div >
+            @*<p class="pull-right">15 reviews</p>
             <p>
                 <span class="glyphicon glyphicon-star"></span>
                 <span class="glyphicon glyphicon-star"></span>
                 <span class="glyphicon glyphicon-star"></span>
                 <span class="glyphicon glyphicon-star"></span>
                 <span class="glyphicon glyphicon-star"></span>
-            </p>
+            </p>*@
+            <h3 class="text-center strong">@Model.Price.ToString("# €")</h3>
         </div>
-        @Ajax.ActionLink("Add to Cart", "AddToCart", "Cart", new { id = @Model.Id, returnUrl = Request.Url.PathAndQuery}, new AjaxOptions { HttpMethod = "POST" }, new {@class = "btn btn-success btn-sm"})
+        @Ajax.ActionLink("Add to Cart", "AddToCart", "Cart", 
+               new { id = @Model.Id, returnUrl = Request.Url.PathAndQuery}, 
+               new AjaxOptions { HttpMethod = "POST" }, 
+               new {@class = "btn btn-success center-block"})
     </div>
 </div>

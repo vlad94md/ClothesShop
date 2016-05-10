@@ -6,6 +6,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if(@Model.CurrentCategory == null)
+{
 <div class="row carousel-holder">
 
     <div class="col-md-12">
@@ -36,7 +38,7 @@
     </div>
 
 </div>
-
+}
 <div class="row">
     @foreach (var product in @Model.Products)
     {

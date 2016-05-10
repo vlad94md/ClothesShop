@@ -38,6 +38,7 @@ namespace ClothesShop.WebUI.Controllers
                 },
                 CurrentCategory = category
             };
+
             return View(model);
         }
 
@@ -48,7 +49,14 @@ namespace ClothesShop.WebUI.Controllers
 
             if (product != null)
             {
-                return File(product.ImageData, product.ImageMimeType);
+                try
+                {
+                    return File(product.ImageData, product.ImageMimeType);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
             }
             else
             {
