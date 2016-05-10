@@ -25,7 +25,7 @@ namespace ClothesShop.WebUI.Controllers
             {
                 Products = repository.Products
                     .Where(p => category == null || p.Category == category)
-                    .OrderBy(game => game.Id)
+                    .OrderBy(Product => Product.Id)
                     .Skip((page - 1)*pageSize)
                     .Take(pageSize),
                 PagingInfo = new PagingInfo
@@ -39,6 +39,21 @@ namespace ClothesShop.WebUI.Controllers
                 CurrentCategory = category
             };
             return View(model);
+        }
+
+        public FileContentResult GetImage(int Id)
+        {
+            Product product = repository.Products
+                .FirstOrDefault(g => g.Id == Id);
+
+            if (product != null)
+            {
+                return File(product.ImageData, product.ImageMimeType);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

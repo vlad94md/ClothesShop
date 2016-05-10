@@ -88,6 +88,7 @@
     <Compile Include="Tests\CartTests.cs" />
     <Compile Include="Tests\AdminTests.cs" />
     <Compile Include="Tests\AdminSecurityTests.cs" />
+    <Compile Include="Tests\ImageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
