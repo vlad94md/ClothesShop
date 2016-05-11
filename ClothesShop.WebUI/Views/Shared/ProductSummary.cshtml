@@ -3,26 +3,31 @@
 <div class="col-sm-4 col-lg-4 col-md-4">
     <div class="thumbnail">
         @*<img src="~/Content/placeholder320.png" alt="">*@
-        <img src="@Url.Action("GetImage", "Product",
-                new { Model.Id })" alt="">
+        @*<img src="@Url.Action("GetImage", "Product",
+                new { Model.Id })" alt="">*@
+        @if(@Model.ImageData != null)
+        {
+        @Html.Raw("<img style='max-width:200px; max-height:350px;' src=\"data:image/jpeg;base64,"
+                                + Convert.ToBase64String(@Model.ImageData) + "\" />")
+        }
         <div class="caption">
             @*<h4 class="pull-right">@Model.Price.ToString("# €")</h4>*@
             <p class="lead text-center">
-                <a href="#">@Model.Name</a>
+                <a href="@Url.Action("Item", "Product", new { Id = @Model.Id})">@Model.Name</a>
             </p>
             @*<h3 class="text-center strong">@Model.Price.ToString("# €")</h3>*@
             @*<p>@Model.Description</p>*@
         </div>
-        <div >
-            @*<p class="pull-right">15 reviews</p>
+        <div class="ratings">
+            <p class="pull-right">15 reviews</p>
             <p>
                 <span class="glyphicon glyphicon-star"></span>
                 <span class="glyphicon glyphicon-star"></span>
                 <span class="glyphicon glyphicon-star"></span>
                 <span class="glyphicon glyphicon-star"></span>
                 <span class="glyphicon glyphicon-star"></span>
-            </p>*@
-            <h3 class="text-center strong">@Model.Price.ToString("# €")</h3>
+            </p>
+            <h3 class="text-center strong" style="color: black;">@Model.Price.ToString("# €")</h3>
         </div>
         @Ajax.ActionLink("Add to Cart", "AddToCart", "Cart", 
                new { id = @Model.Id, returnUrl = Request.Url.PathAndQuery}, 

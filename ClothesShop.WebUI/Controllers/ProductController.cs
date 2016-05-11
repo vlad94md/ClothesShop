@@ -19,6 +19,40 @@ namespace ClothesShop.WebUI.Controllers
             repository = repos;
         }
 
+        public ViewResult Item(int Id)
+        {
+            var model = repository.Products.FirstOrDefault(x => x.Id == Id);
+
+            return View(model);
+        }
+
+
+        public ViewResult Search(string category, int page = 1, string name = "")
+        {
+            //var model = repository.Products.Where(x => x.Name.Contains(name)).ToList();
+            ViewBag.name = name;
+
+            ProductsListViewModel model = new ProductsListViewModel
+            {
+                Products = repository.Products
+                .Where(x => x.Name.ToLower().Contains(name.ToLower()))
+                .OrderBy(Product => Product.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    TotalItems = category == null ?
+                    repository.Products.Where(x => x.Name.ToLower().Contains(name.ToLower())).Count() :
+                    repository.Products.Where(x => x.Name.ToLower().Contains(name.ToLower()) && x.Category == category).Count()
+                },
+                CurrentCategory = category
+            };
+
+            return View(model);
+        }
+
         public ViewResult List(string category, int page = 1)
         {
             ProductsListViewModel model = new ProductsListViewModel

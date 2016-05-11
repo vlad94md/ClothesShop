@@ -6,7 +6,12 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
     <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
-    <link href="~/Content/shop-homepage.css" rel="stylesheet" />
+    <link href="~/Content/shop-homepage.css" rel="stylesheet"/>
+    <link href="~/Content/shop-item.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.2/css/bootstrap-slider.min.css" rel="stylesheet"/>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-slider.js"></script>
     <title>@ViewBag.Title</title>
 </head>
 <body>
@@ -23,13 +28,10 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand hidden-xs" href="#">Fashion Shop - The Latest Clothes and Fashion online</a>
-                    <a class="navbar-brand visible-xs" href="#">Fashion Shop - </a>
-                    <a class="navbar-brand visible-xs" href="#">Fashion online</a>
+                    <a class="navbar-brand visible-xs" href="#">Fashion Shop </a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                    </ul>
                     @Html.Action("Summary", "Cart")
                 </div>
 
@@ -48,9 +50,9 @@
             </div>
         </div>
     </div>
-
+    
     <div class="container">
-        <hr>
+        @*<hr>*@
         <!-- Footer -->
         <footer>
             <div class="row">
@@ -62,8 +64,7 @@
 
     </div>
     <!-- /.container -->
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+
 
 </body>
 </html>

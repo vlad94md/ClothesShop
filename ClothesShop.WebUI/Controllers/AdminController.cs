@@ -30,6 +30,13 @@ namespace ClothesShop.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (product.Id != 0)
+                {
+                    var prod = repository.Products.FirstOrDefault(x => x.Id == product.Id);
+                    product.ImageData = prod.ImageData;
+                    product.ImageMimeType = prod.ImageMimeType;
+                }
+
                 if (image != null)
                 {
                     product.ImageMimeType = image.ContentType;
