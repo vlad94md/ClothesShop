@@ -31,19 +31,27 @@ namespace ClothesShop.WebUI.Controllers
         {
             //var model = repository.Products.Where(x => x.Name.Contains(name)).ToList();
             ViewBag.name = name;
+            ViewBag.category = category;
+
+            var products = String.IsNullOrEmpty(category)
+                ? repository.Products
+                    .Where(x => x.Name.ToLower().Contains(name.ToLower()))
+                    .OrderBy(Product => Product.Id)
+                    .Skip((page - 1)*pageSize)
+                    .Take(pageSize)
+                : repository.Products.Where(x => x.Name.ToLower().Contains(name.ToLower()) && x.Category == category)
+                    .OrderBy(Product => Product.Id)
+                    .Skip((page - 1)*pageSize)
+                    .Take(pageSize);
 
             ProductsListViewModel model = new ProductsListViewModel
             {
-                Products = repository.Products
-                .Where(x => x.Name.ToLower().Contains(name.ToLower()))
-                .OrderBy(Product => Product.Id)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize),
+                Products = products,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = pageSize,
-                    TotalItems = category == null ?
+                    TotalItems = String.IsNullOrEmpty(category) ?
                     repository.Products.Where(x => x.Name.ToLower().Contains(name.ToLower())).Count() :
                     repository.Products.Where(x => x.Name.ToLower().Contains(name.ToLower()) && x.Category == category).Count()
                 },

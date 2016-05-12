@@ -6,7 +6,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>Search by "@ViewBag.name"</h3>
+<h3>Search by "@ViewBag.name"
+
+    @if (@ViewBag.category != null && @ViewBag.category != "")
+    {
+        <span> in category "@ViewBag.category"</span>
+    }
+
+</h3>
 <hr/>
 
 @if(@Model.Products.Count() != 0) {
@@ -26,7 +33,7 @@ else
 
 <div class="row text-center">
     <div class="btn-group">
-        @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("Search", new { page = x, category = Model.CurrentCategory, name = ViewBag.name }))
     </div>
 </div>
 <br />

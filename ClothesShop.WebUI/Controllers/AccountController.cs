@@ -42,5 +42,28 @@ namespace ClothesShop.WebUI.Controllers
                 return View();
             }
         }
+
+
+        public ViewResult SignIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ViewResult SignIn(LoginViewModel user)
+        {
+            return View();
+        }
+
+        public ViewResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ViewResult Register(UserModel user)
+        {
+            return View();
+        }
     }
 }
