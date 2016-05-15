@@ -11,10 +11,10 @@ namespace ClothesShop.WebUI.Controllers
 {
     public class ProductController : Controller
     {
-        private IProductRepository repository;
+        private IShopRepository repository;
         public int pageSize = 6;
 
-        public ProductController(IProductRepository repos)
+        public ProductController(IShopRepository repos)
         {
             repository = repos;
         }
@@ -23,13 +23,25 @@ namespace ClothesShop.WebUI.Controllers
         {
             var model = repository.Products.FirstOrDefault(x => x.Id == Id);
 
+            var currUser = (User)System.Web.HttpContext.Current.Session["user"];
+
+            if (currUser != null)
+            {
+                var product =
+                    repository.Purchases.FirstOrDefault(x => x.UserName == currUser.Username && x.ProductId == Id);
+
+                if (product != null)
+                {
+                    ViewBag.WasBought = true;
+                }
+            }
+
             return View(model);
         }
 
 
         public ViewResult Search(string category, int page = 1, string name = "")
         {
-            //var model = repository.Products.Where(x => x.Name.Contains(name)).ToList();
             ViewBag.name = name;
             ViewBag.category = category;
 

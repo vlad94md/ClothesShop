@@ -11,10 +11,10 @@ namespace ClothesShop.WebUI.Controllers
 {
     public class CartController : Controller
     {
-        private IProductRepository repository;
+        private IShopRepository repository;
         private IOrderProcessor orderProcessor;
 
-        public CartController(IProductRepository repo, IOrderProcessor processor)
+        public CartController(IShopRepository repo, IOrderProcessor processor)
         {
             repository = repo;
             orderProcessor = processor;
@@ -61,7 +61,21 @@ namespace ClothesShop.WebUI.Controllers
         [HttpGet]
         public ViewResult Checkout()
         {
-            return View(new ShippingDetails());
+            ShippingDetails model = new ShippingDetails();
+            
+            var currUser = (User)System.Web.HttpContext.Current.Session["user"];
+            if (currUser != null)
+            {
+                model.Name = currUser.Name;
+                model.Number = currUser.Number;
+                model.City = currUser.City;
+                model.Line1 = currUser.Line1;
+                model.Line2 = currUser.Line2;
+                model.Country = currUser.Country;
+                model.Country = currUser.Country;
+            }
+
+            return View(model);
         }
 
         [HttpPost]
@@ -69,12 +83,21 @@ namespace ClothesShop.WebUI.Controllers
         {
             if (cart.Lines.Count() == 0)
             {
-                ModelState.AddModelError("", "Извините, ваша корзина пуста!");
+                ModelState.AddModelError("", "Sorry, but your cart is empty!");
             }
 
             if (ModelState.IsValid)
             {
                 orderProcessor.ProcessOrder(cart, shippingDetails);
+                var currUser = (User)System.Web.HttpContext.Current.Session["user"];
+
+                foreach (var line in cart.Lines)
+                {
+                    repository.SavePurchase(new Purchase()
+                    {
+                        Date = DateTime.Now, ProductId = line.Item.Id, UserName = currUser.Username, Amount = line.Quantity
+                    });
+                }
                 cart.Clear();
                 return View("Completed");
             }

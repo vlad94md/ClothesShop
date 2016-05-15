@@ -19,7 +19,7 @@ namespace ClothesShop.UnitTests
         public void Can_Paginate()
         {
             // Организация (arrange)
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>
             {
                 new Product { Id = 1, Name = "Item1"},
@@ -73,7 +73,7 @@ namespace ClothesShop.UnitTests
         public void Can_Send_Pagination_View_Model()
         {
             // Организация (arrange)
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>
             {
                 new Product { Id = 1, Name = "Item1"},
@@ -101,7 +101,7 @@ namespace ClothesShop.UnitTests
         public void Can_Filter_Products()
         {
             // Организация (arrange)
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>
             {
                 new Product { Id = 1, Name = "Item1", Category="Cat1"},
@@ -127,7 +127,7 @@ namespace ClothesShop.UnitTests
         public void Can_Create_Categories()
         {
             // Организация - создание имитированного хранилища
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>
             {
                 new Product { Id = 1, Name = "Item1", Category="Cat1"},
@@ -154,7 +154,7 @@ namespace ClothesShop.UnitTests
         public void Indicates_Selected_Category()
         {
             // Организация - создание имитированного хранилища
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>
             {
                 new Product { Id = 1, Name = "Item1", Category="Cat1"},
@@ -178,7 +178,7 @@ namespace ClothesShop.UnitTests
         public void Generate_Category_Specific_Game_Count()
         {
             // Организация (arrange)
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>
             {
                 new Product { Id = 1, Name = "Item1", Category="Cat1"},

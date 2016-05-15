@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ClothesShop.WebUI.Models.PurchaseViewModel>
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Purchase History:</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Item</th>
+        <th>Amount</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (var purchase in @Model)
+        {
+            <tr>
+                <td><a href="@Url.Action("Item", "Product", new {Id = @purchase.ProductId})">@purchase.ProductName</a></td>
+                <td>@purchase.Amount</td>
+                <td>@purchase.Date</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

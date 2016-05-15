@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if(@Model.CurrentCategory == null)
+@if(@Model.CurrentCategory == null && @Model.PagingInfo.CurrentPage == 1)
 {
 <div class="row carousel-holder">
 

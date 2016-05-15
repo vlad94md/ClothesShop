@@ -1,0 +1,102 @@
+﻿@model ClothesShop.Domain.Entities.User
+
+@{
+    ViewBag.Title = "Register";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
+    <link href="~/Content/shop-homepage.css" rel="stylesheet" />
+    <link href="~/Content/shop-item.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.2/css/bootstrap-slider.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-slider.js"></script>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+
+                    <a class="navbar-brand hidden-xs" href="@Url.Action("List", "Product")">Fashion Shop - The Latest Clothes and Fashion online</a>
+                    <a class="navbar-brand visible-xs" href="#">Fashion Shop </a>
+                </div>
+
+
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </nav>
+
+        <div class="row panel">
+            <div class="col-lg-12">
+                <div class="panel col-lg-4 center-block" style="float: none;">
+                    <div class="panel-heading">
+                        <h3>Registration:</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.ValidationSummary()
+                            <div class="form-group">
+                                <label>Username:</label>
+                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Password:</label>
+                                @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
+                            </div>
+                            <div class="form-group">
+                                <label>E-mail:</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            </div>
+
+                            <hr/>
+                            <div class="form-group">
+                                <label>Full Name:</label>
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Main address:</label>
+                                @Html.TextBoxFor(m => m.Line1, new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Second address:</label>
+                                @Html.TextBoxFor(m => m.Line2, new {@class = "form-control"})
+                            </div>
+                            <div class="form-group">
+                                <label>Phone number:</label>
+                                @Html.TextBoxFor(m => m.Number, new {@class = "form-control"})
+                            </div>
+                            <div class="form-group">
+                                <label>City:</label>
+                                @Html.TextBoxFor(m => m.City, new {@class = "form-control"})
+                            </div>
+                            <div class="form-group">
+                                <label>Country:</label>
+                                @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
+                            </div>
+                            <input type="submit" value="Submit" class="btn btn-primary" />
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+</html>

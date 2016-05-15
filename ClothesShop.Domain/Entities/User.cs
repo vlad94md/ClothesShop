@@ -7,12 +7,22 @@ using System.Threading.Tasks;
 
 namespace ClothesShop.Domain.Entities
 {
-    public class ShippingDetails
+    public class User
     {
-        [Required(ErrorMessage = "Enter your name")]
+        [Key]
+        [Required(ErrorMessage = "Enter your username")]
+        public string Username { get; set; }
+
+        [Required(ErrorMessage = "Enter your password")]
+        public string Password { get; set; }
+
+        [Required(ErrorMessage = "Enter your email")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Enter your fullname")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Enter your first address")]
+        [Required(ErrorMessage = "Enter your main address")]
         [Display(Name = "First address")]
         public string Line1 { get; set; }
 
@@ -29,7 +39,5 @@ namespace ClothesShop.Domain.Entities
         [Required(ErrorMessage = "Enter your country")]
         [Display(Name = "Country")]
         public string Country { get; set; }
-
-        public bool GiftWrap { get; set; }
     }
 }

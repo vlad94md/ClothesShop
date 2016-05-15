@@ -11,9 +11,9 @@ namespace ClothesShop.WebUI.Controllers
     [Authorize]
     public class AdminController : Controller
     {
-        private IProductRepository repository;
+        private IShopRepository repository;
 
-        public AdminController(IProductRepository repo)
+        public AdminController(IShopRepository repo)
         {
             repository = repo;
         }

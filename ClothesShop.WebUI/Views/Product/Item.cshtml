@@ -1,8 +1,9 @@
 ﻿@model ClothesShop.Domain.Entities.Product
-
+@using ClothesShop.Domain.Entities
 @{
     ViewBag.Title = "Item";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var currUser = (User)System.Web.HttpContext.Current.Session["user"];
 }
 
 @if (@Model.Category == null)
@@ -65,10 +66,49 @@
                 </div>
             </div>
             <div class="well">
-                <div class="text-right">
-                    <a class="btn btn-success">Leave a Review</a>
-                </div>
-                <hr>
+                @if (currUser == null)
+                {
+                    <div class="text-right">
+                        <p>You need to be Signed In in order to leave a review.</p>
+                    </div>
+                }
+                else
+                {
+                    if(ViewBag.WasBought == true)
+                    { 
+                    using (Html.BeginForm())
+                    {
+                        <div class="row container-fluid">
+
+                            <div class="form-group">
+                                <label>Review:</label>
+                                <textarea class="form-control" rows="5"></textarea>
+                            </div>
+
+                            <div class="form-group col-lg-2">
+                                <label for="sel1">Rating:</label>
+                                <select class="form-control" id="sel1">
+                                    <option>1 star</option>
+                                    <option>2 stars</option>
+                                    <option>3 stars</option>
+                                    <option>4 stars</option>
+                                    <option>5 stars</option>
+                                </select>
+                            </div>
+
+                            <input class="btn btn-success pull-right" type="submit" value="Leave a Review" style="margin-top: 20px"/>
+                        </div>
+
+                        }
+                    }
+                    else
+                    {
+                        <div class="text-right">
+                            <p>You need to buy this product in order to leave a review.</p>
+                        </div>
+                    }
+                }
+                <hr/>
                 <div class="row">
                     <div class="col-md-12">
                         <span class="glyphicon glyphicon-star"></span>

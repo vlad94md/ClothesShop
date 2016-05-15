@@ -26,7 +26,7 @@ namespace ClothesShop.UnitTests.Tests
             };
 
             // Организация - создание имитированного хранилища
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product> {
                 new Product {Id = 1, Name = "Игра1"},
                 game,
@@ -49,7 +49,7 @@ namespace ClothesShop.UnitTests.Tests
         public void Cannot_Retrieve_Image_Data_For_Invalid_ID()
         {
             // Организация - создание имитированного хранилища
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product> {
                 new Product {Id = 1, Name = "Игра1"},
                 new Product {Id = 2, Name = "Игра2"}

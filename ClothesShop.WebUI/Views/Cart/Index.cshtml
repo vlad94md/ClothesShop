@@ -4,6 +4,8 @@
     ViewBag.Title = "Online Store: your cart";
 }
 
+@if(@Model.Cart.Lines.Count() != 0)
+{ 
 <h2>Your cart: </h2>
 <table class="table">
     <thead>
@@ -19,7 +21,7 @@
         {
             <tr>
                 <td class="text-center">@line.Quantity</td>
-                <td class="text-left">@line.Item.Name</td>
+                <td class="text-left"><a href="@Url.Action("Item","Product", new {Id = @line.Item.Id})">@line.Item.Name</a></td>
                 <td class="text-right">@line.Item.Price.ToString("# €")</td>
                 <td class="text-right">
                     @((line.Quantity * line.Item.Price).ToString("# €"))
@@ -49,3 +51,25 @@
     <a class="btn btn-primary" href="@Model.ReturnUrl">Back To Shoping</a>
     @Html.ActionLink("Make an order", "Checkout", null, new { @class = "btn btn-primary" })
 </div>
+}
+else
+{
+    <h2>Your cart: </h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Quantity</th>
+            <th>Item</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Total Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <h4 style="text-align: center">No items.</h4> <br/>
+
+    <div class="text-center">
+        <a class="btn btn-primary" href="@Model.ReturnUrl">Back To Shoping</a>
+    </div>
+}

@@ -130,7 +130,7 @@ namespace ClothesShop.UnitTests
         {
             // Организация - создание имитированного хранилища
             // Организация - создание имитированного хранилища
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>
             {
             new Product() {Id = 1, Name = "Игра1", Category = "Кат1"},
@@ -157,7 +157,7 @@ namespace ClothesShop.UnitTests
         public void Adding_Game_To_Cart_Goes_To_Cart_Screen()
         {
             // Организация - создание имитированного хранилища
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>
             {
                 new Product() {Id = 1, Name = "Игра1", Category = "Кат1"},

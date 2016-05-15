@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using ClothesShop.Domain.Abstract;
+using ClothesShop.Domain.Concrete;
 using ClothesShop.WebUI.Controllers;
 using ClothesShop.WebUI.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -27,7 +28,7 @@ namespace ClothesShop.UnitTests
             };
 
             // Организация - создание контроллера
-            AccountController target = new AccountController(mock.Object);
+            AccountController target = new AccountController(mock.Object, new EFShopRepository());
 
             // Действие - аутентификация
             ActionResult result = target.Login(model, "/MyURL");
@@ -53,7 +54,7 @@ namespace ClothesShop.UnitTests
             };
 
             // Организация - создание контроллера
-            AccountController target = new AccountController(mock.Object);
+            AccountController target = new AccountController(mock.Object, new EFShopRepository());
 
             // Действие - аутентификация
             ActionResult result = target.Login(model, "/MyURL");

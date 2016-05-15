@@ -1,7 +1,12 @@
 ﻿@model IEnumerable<string>
 
+@using ClothesShop.Domain.Entities
+@{
+    var currUser = (User)System.Web.HttpContext.Current.Session["user"];
+}
+
 <div class="sidebar-search">
-    <h3>Seacrh:</h3>
+    <h3>Search:</h3>
     @using (Html.BeginForm("Search", "Product"))
     {
         <div class="input-group custom-search-form">
@@ -21,8 +26,18 @@
 
 <div class="list-group">
     <h3>Categories:</h3>
-    @Html.ActionLink("Home", "List", "Product", null,
-        new {@class = "list-group-item"})
+
+    <a href="@Url.Action("List", "Product")" class="list-group-item">
+        <span class="glyphicon glyphicon-home"></span> Home
+    </a>
+
+    @if(currUser != null)
+    {
+        <a href="@Url.Action("Recommend", "Product")" class="list-group-item">
+            <span class="glyphicon glyphicon-flag"></span> Recommended for you
+        </a>
+    }
+
 
     @foreach (var link in Model)
     {

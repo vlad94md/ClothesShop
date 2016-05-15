@@ -9,9 +9,9 @@ namespace ClothesShop.WebUI.Controllers
 {
     public class NavController : Controller
     {
-        private IProductRepository repository;
+        private IShopRepository repository;
 
-        public NavController(IProductRepository repo)
+        public NavController(IShopRepository repo)
         {
             repository = repo;
         }

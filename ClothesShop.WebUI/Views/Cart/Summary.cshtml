@@ -1,21 +1,61 @@
 ﻿@model ClothesShop.Domain.Entities.Cart
 
-<div class="navbar-right hidden-xs" style="margin-right: 20px; margin-left: 10px">
-    <a href="@Url.Action("Index", "Cart", new {returnUrl = Request.Url.PathAndQuery})" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-shopping-cart"></span> </a>
-    <a href="@Url.Action("Signin", "Account")" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-user"></span> </a>
+@using ClothesShop.Domain.Entities
+@{
+    var currUser = (User)System.Web.HttpContext.Current.Session["user"];
+}
+
+
+<div class="navbar-right row hidden-xs">
+    <div class="row pull-right">
+        <div>
+
+            <div class="navbar-text" style="color: whitesmoke">
+                <b class="hidden-xs">Your Cart:</b>
+                @Model.Lines.Sum(x => x.Quantity) items,
+                @Model.ComputeTotalValue().ToString("# €")
+            </div>
+            <a href="@Url.Action("Index", "Cart", new {returnUrl = Request.Url.PathAndQuery})" class="btn btn-primary navbar-btn">
+                <span class="glyphicon glyphicon-shopping-cart"></span> Cart
+            </a>
+
+            @if (currUser == null)
+            {
+                <div class="dropdown" style="display: inline-block">
+                <button class="btn btn-primary navbar-btn dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-user"></span>
+                    Account
+                    <span class="caret"></span>
+                </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("Signin", "Account")">Sign In</a></li>
+                        <li><a href="@Url.Action("Register", "Account")">Register</a></li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="dropdown" style="display: inline-block">
+                <button class="btn btn-primary navbar-btn dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-user"></span>
+                    @currUser.Username
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="@Url.Action("Details", "Account")">My Account</a></li>
+                    <li><a href="@Url.Action("History", "Account")">Order History</a></li>
+                    <li><a href="@Url.Action("Logout", "Account")">Logout</a></li>
+                </ul>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <div class="navbar-right visible-xs">
+        <a href=@Url.Action("Index", "Cart", new {returnUrl = Request.Url.PathAndQuery})
+           class="btn btn-default navbar-btn">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+        </a>
+    </div>
 </div>
-
-<div class="navbar-right visible-xs">
-    <a href=@Url.Action("Index", "Cart", new {returnUrl = Request.Url.PathAndQuery})
-       class="btn btn-default navbar-btn">
-        <span class="glyphicon glyphicon-shopping-cart"></span>
-    </a>
-</div>
-
-<div class="navbar-text navbar-right">
-    <b class="hidden-xs">Your Cart:</b>
-    @Model.Lines.Sum(x => x.Quantity) items,
-    @Model.ComputeTotalValue().ToString("# €")
-</div>
-
-

@@ -36,7 +36,7 @@ namespace ClothesShop.WebUI.Infrastructure
         private void AddBindings()
         {
             // Здесь размещаются привязки
-            kernel.Bind<IProductRepository>().To<EFProductRepository>();
+            kernel.Bind<IShopRepository>().To<EFShopRepository>();
 
             EmailSettings emailSettings = new EmailSettings
             {

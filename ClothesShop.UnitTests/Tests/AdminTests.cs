@@ -16,7 +16,7 @@ namespace ClothesShop.UnitTests
         public void Index_Contains_All_Products()
         {
             // Организация - создание имитированного хранилища данных
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>
             {
                 new Product { Id = 1, Name = "Item1"},
@@ -44,7 +44,7 @@ namespace ClothesShop.UnitTests
         public void Can_Edit_Game()
         {
             // Организация - создание имитированного хранилища данных
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>
             {
                 new Product { Id = 1, Name = "Item1"},
@@ -75,7 +75,7 @@ namespace ClothesShop.UnitTests
             Product product = new Product { Id = 2, Name = "Item2" };
 
             // Организация - создание имитированного хранилища данных
-            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            Mock<IShopRepository> mock = new Mock<IShopRepository>();
             mock.Setup(m => m.Products).Returns(new List<Product>
             {
                 new Product { Id = 1, Name = "Item1"},
