@@ -39,6 +39,22 @@ namespace ClothesShop.WebUI.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ViewResult Item(Review review, int Id)
+        {
+            //var model = repository.Products.FirstOrDefault(x => x.Id == Id);
+
+            var currUser = (User)System.Web.HttpContext.Current.Session["user"];
+
+            review.Author = currUser.Username;
+            review.Date = DateTime.Now;
+            review.ProductId = Id;
+
+            repository.SaveReview(review);
+
+            return View();
+        }
+
 
         public ViewResult Search(string category, int page = 1, string name = "")
         {

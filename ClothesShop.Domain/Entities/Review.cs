@@ -14,5 +14,7 @@ namespace ClothesShop.Domain.Entities
         public string Message { get; set; }
         public string Author { get; set; }
         public int Rate { get; set; }
+        public int ProductId { get; set; }
+        public DateTime Date { get; set; }
     }
 }

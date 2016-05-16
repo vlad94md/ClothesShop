@@ -149,6 +149,18 @@ namespace ClothesShop.WebUI.Controllers
                 Price = 35
             });
 
+            repository.SaveUser(new User()
+            {
+                Name = "Vlasilav Guleaev",
+                Username = "vladg",
+                Password = "123",
+                Number = "079289934",
+                Email = "vlad@gmail.com",
+                Line1 = "Str.M.Cel Batrin 3, ap 105",
+                City = "Chisinau",
+                Country = "Moldova"
+            });
+
             return "Db was setuped";
         }
     }
