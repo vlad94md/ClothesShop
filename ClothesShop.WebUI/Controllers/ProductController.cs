@@ -21,7 +21,7 @@ namespace ClothesShop.WebUI.Controllers
 
         public ViewResult Item(int Id)
         {
-            var model = repository.Products.FirstOrDefault(x => x.Id == Id);
+            var currProduct = repository.Products.FirstOrDefault(x => x.Id == Id);
 
             var currUser = (User)System.Web.HttpContext.Current.Session["user"];
 
@@ -36,25 +36,47 @@ namespace ClothesShop.WebUI.Controllers
                 }
             }
 
+            var reviews =
+                repository.Reviews.Where(x => x.ProductId == Id)
+                    .OrderByDescending(x => x.Date).ToList();
+
+            double rate = Convert.ToDouble(reviews.Sum(x => x.Rate)) / Convert.ToDouble(reviews.Count);
+            currProduct.Rate = Math.Round(rate, 1);
+
+            ItemViewModel model = new ItemViewModel() {Item = currProduct, Reviews = reviews};
+
             return View(model);
         }
 
         [HttpPost]
-        public ViewResult Item(Review review, int Id)
+        public ViewResult Item(Review review)
         {
-            //var model = repository.Products.FirstOrDefault(x => x.Id == Id);
-
             var currUser = (User)System.Web.HttpContext.Current.Session["user"];
 
             review.Author = currUser.Username;
             review.Date = DateTime.Now;
-            review.ProductId = Id;
 
             repository.SaveReview(review);
 
-            return View();
-        }
+            var currProduct = repository.Products.FirstOrDefault(x => x.Id == review.ProductId);
 
+            if (currUser != null)
+            {
+
+                ViewBag.WasBought = true;
+            }
+
+            var reviews =
+                repository.Reviews.Where(x => x.ProductId == review.ProductId)
+                    .OrderByDescending(x => x.Date).ToList();
+
+            double rate = Convert.ToDouble(reviews.Sum(x => x.Rate)) / Convert.ToDouble(reviews.Count);
+            currProduct.Rate = Math.Round(rate, 1);
+
+            ItemViewModel model = new ItemViewModel() { Item = currProduct, Reviews = reviews };
+
+            return View(model);
+        }
 
         public ViewResult Search(string category, int page = 1, string name = "")
         {

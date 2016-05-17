@@ -1,4 +1,4 @@
-﻿@model ClothesShop.Domain.Entities.Product
+﻿@model ClothesShop.WebUI.Models.ItemViewModel
 @using ClothesShop.Domain.Entities
 @{
     ViewBag.Title = "Item";
@@ -6,7 +6,7 @@
     var currUser = (User)System.Web.HttpContext.Current.Session["user"];
 }
 
-@if (@Model.Category == null)
+@if (@Model.Item.Category == null)
 {
     <div class="row carousel-holder">
 
@@ -45,24 +45,30 @@
     <div class="row">
         <div class="col-md-9">
             <div class="thumbnail">
-                <img class="img-responsive" src="@Url.Action("GetImage", "Product", new { Model.Id })" style="max-height: 50%; max-width: 50%" alt="No image">
+                <img class="img-responsive" src="@Url.Action("GetImage", "Product", new { Model.Item.Id })" style="max-height: 50%; max-width: 50%" alt="No image">
                 <div class="caption-full">
-                    <h4 class="pull-right">@Model.Price.ToString("# €")</h4>
+                    <h4 class="pull-right">@Model.Item.Price.ToString("# €")</h4>
                     <h4>
-                        <a href="#">@Model.Name</a>
+                        <a href="#">@Model.Item.Name</a>
                     </h4>
-                    <p>@Model.Description</p>
+                    <p>@Model.Item.Description</p>
                 </div>
                 <div class="ratings">
-                    <p class="pull-right">3 reviews</p>
+                    <p class="pull-right">@Model.Reviews.Count reviews</p>
                     <p>
                         <span class="glyphicon glyphicon-star"></span>
                         <span class="glyphicon glyphicon-star"></span>
                         <span class="glyphicon glyphicon-star"></span>
                         <span class="glyphicon glyphicon-star"></span>
                         <span class="glyphicon glyphicon-star-empty"></span>
-                        4.0 stars
+                        @Model.Item.Rate stars
                     </p>
+                </div>
+                <div class="row">
+                    @Ajax.ActionLink("Add to Cart", "AddToCart", "Cart",
+               new { id = @Model.Item.Id, returnUrl = Request.Url.PathAndQuery },
+               new AjaxOptions { HttpMethod = "POST" },
+               new { @class = "btn btn-success center-block", @style= "margin: auto; margin-bot: 5px; max-width: 100px" })
                 </div>
             </div>
             <div class="well">
@@ -82,18 +88,22 @@
 
                             <div class="form-group">
                                 <label>Review:</label>
-                                <textarea class="form-control" rows="5"></textarea>
+                                <textarea class="form-control" name="Message" rows="5"></textarea>
                             </div>
 
                             <div class="form-group col-lg-2">
                                 <label for="sel1">Rating:</label>
-                                <select class="form-control" id="sel1">
-                                    <option>5 stars</option>
-                                    <option>4 stars</option>
-                                    <option>3 stars</option>
-                                    <option>2 stars</option>
-                                    <option>1 star</option>
+                                <select class="form-control" name="Rate" id="sel1">
+                                    <option value="5">5 stars</option>
+                                    <option value="4">4 stars</option>
+                                    <option value="3">3 stars</option>
+                                    <option value="2">2 stars</option>
+                                    <option value="1">1 star</option>
                                 </select>
+                            </div>
+
+                            <div>
+                                <input type="text" name="ProductId" value="@Model.Item.Id" style="display: none"/>
                             </div>
 
                             <input class="btn btn-success pull-right" type="submit" value="Leave a Review" style="margin-top: 20px"/>
@@ -108,45 +118,44 @@
                         </div>
                     }
                 }
-                <hr/>
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">10 days ago</span>
-                        <p>This product was great in terms of quality. I would definitely buy another!</p>
+                @if (@Model.Reviews.Count == 0)
+                {
+                    <p>This items has no reviews yet. Buy it be first to review it!</p>
+                }
+                @foreach (var review in @Model.Reviews)
+                {
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @for (int i = 0; i < review.Rate; i++)
+                            {
+                                <span class="glyphicon glyphicon-star"></span>
+                            }
+
+                            @for (int i = 0; i < 5 - review.Rate; i++)
+                            {
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            }
+
+                            @review.Author
+                            <span class="pull-right">   
+                            @{ 
+                                TimeSpan tr = (@DateTime.Now - review.Date);
+                                int days = Convert.ToInt32(tr.TotalDays);
+
+                                if (days != 0)
+                                {
+                                    @days @Html.Raw("days ago"); 
+                                }
+                                else
+                                {
+                                    @Html.Raw("today"); 
+                                }
+                            }</span>
+                            <p>@review.Message</p>
+                        </div>
                     </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">12 days ago</span>
-                        <p>I've alredy ordered another one!</p>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">15 days ago</span>
-                        <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </div>
