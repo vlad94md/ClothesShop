@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using ClothesShop.Domain.Abstract;
 using ClothesShop.Domain.Entities;
 using ClothesShop.WebUI.Models;
@@ -40,8 +41,9 @@ namespace ClothesShop.WebUI.Controllers
                 repository.Reviews.Where(x => x.ProductId == Id)
                     .OrderByDescending(x => x.Date).ToList();
 
-            double rate = Convert.ToDouble(reviews.Sum(x => x.Rate)) / Convert.ToDouble(reviews.Count);
-            currProduct.Rate = Math.Round(rate, 1);
+            //double rate = Convert.ToDouble(reviews.Sum(x => x.Rate)) / Convert.ToDouble(reviews.Count);
+            //currProduct.Rate = Math.Round(rate, 1);
+
 
             ItemViewModel model = new ItemViewModel() {Item = currProduct, Reviews = reviews};
 
@@ -72,6 +74,9 @@ namespace ClothesShop.WebUI.Controllers
 
             double rate = Convert.ToDouble(reviews.Sum(x => x.Rate)) / Convert.ToDouble(reviews.Count);
             currProduct.Rate = Math.Round(rate, 1);
+            currProduct.ReviewsNumber = reviews.Count;
+
+            repository.SaveProduct(currProduct);
 
             ItemViewModel model = new ItemViewModel() { Item = currProduct, Reviews = reviews };
 
@@ -94,6 +99,17 @@ namespace ClothesShop.WebUI.Controllers
                     .Skip((page - 1)*pageSize)
                     .Take(pageSize);
 
+
+            List<ItemViewModel> items = new List<ItemViewModel>();
+            foreach (var item in products)
+            {
+                ItemViewModel modelItem = new ItemViewModel();
+                modelItem.Item = item;
+                modelItem.ReviewsCount = repository.Reviews.Count(x => x.ProductId == item.Id);
+
+                items.Add(modelItem);
+            }
+
             ProductsListViewModel model = new ProductsListViewModel
             {
                 Products = products,
@@ -113,13 +129,26 @@ namespace ClothesShop.WebUI.Controllers
 
         public ViewResult List(string category, int page = 1)
         {
+
+            var products = repository.Products
+                .Where(p => category == null || p.Category == category)
+                .OrderBy(Product => Product.Id)
+                .Skip((page - 1)*pageSize)
+                .Take(pageSize);
+
+            //List<ItemViewModel> items = new List<ItemViewModel>();
+            //foreach (var item in products)
+            //{
+            //    ItemViewModel modelItem = new ItemViewModel();
+            //    modelItem.Item = item;
+            //    modelItem.ReviewsCount = repository.Reviews.Count(x => x.ProductId == item.Id);
+
+            //    items.Add(modelItem);
+            //}
+
             ProductsListViewModel model = new ProductsListViewModel
             {
-                Products = repository.Products
-                    .Where(p => category == null || p.Category == category)
-                    .OrderBy(Product => Product.Id)
-                    .Skip((page - 1)*pageSize)
-                    .Take(pageSize),
+                Products = products,
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
@@ -132,6 +161,11 @@ namespace ClothesShop.WebUI.Controllers
             };
 
             return View(model);
+        }
+
+        public ViewResult Recommend(int page = 1)
+        {
+            return null;
         }
 
         public FileContentResult GetImage(int Id)

@@ -34,5 +34,6 @@ namespace ClothesShop.Domain.Entities
         public byte[] ImageData { get; set; }
         public string ImageMimeType { get; set; }
         public double Rate { get; set; }
+        public int ReviewsNumber { get; set; }
     }
 }

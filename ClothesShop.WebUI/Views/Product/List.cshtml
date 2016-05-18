@@ -46,14 +46,12 @@
     }
 
 </div>
-<div class="row text-center">
-
-    <div class="btn-group">
-        @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new {page = x, category = Model.CurrentCategory}))
+@if (@Model.PagingInfo.TotalPages != 1 && @Model.PagingInfo.TotalPages != 0)
+{
+    <div class="row text-center">
+        <div class="btn-group">
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new {page = x, category = Model.CurrentCategory}))
+        </div>
     </div>
-</div>
-<br />
-@*<div class="btn-group pull-right">
-        @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
-</div>*@
-
+    <br/>
+}

@@ -9,6 +9,7 @@ namespace ClothesShop.WebUI.Models
     public class ItemViewModel
     {
         public Product Item { get; set; }
-        public List<Review> Reviews { get; set; } 
+        public List<Review> Reviews { get; set; }
+        public int ReviewsCount { get; set; }
     }
 }

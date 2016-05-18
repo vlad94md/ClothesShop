@@ -22,7 +22,6 @@
         {
             @Html.Partial("ProductSummary", product)
         }
-
     </div>
 }
 else
@@ -31,9 +30,12 @@ else
 }
 
 
+@if(@Model.PagingInfo.TotalPages != 1 && @Model.PagingInfo.TotalPages != 0)
+{
 <div class="row text-center">
     <div class="btn-group">
         @Html.PageLinks(Model.PagingInfo, x => Url.Action("Search", new { page = x, category = Model.CurrentCategory, name = ViewBag.name }))
     </div>
 </div>
 <br />
+}

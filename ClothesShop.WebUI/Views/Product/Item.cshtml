@@ -47,7 +47,9 @@
             <div class="thumbnail">
                 <img class="img-responsive" src="@Url.Action("GetImage", "Product", new { Model.Item.Id })" style="max-height: 50%; max-width: 50%" alt="No image">
                 <div class="caption-full">
-                    <h4 class="pull-right">@Model.Item.Price.ToString("# €")</h4>
+                    <h4 class="pull-right">
+                        <span class="label label-pill label-primary" style="font-size: 17px;">@Model.Item.Price.ToString("# €")</span>
+                    </h4>
                     <h4>
                         <a href="#">@Model.Item.Name</a>
                     </h4>
@@ -56,19 +58,23 @@
                 <div class="ratings">
                     <p class="pull-right">@Model.Reviews.Count reviews</p>
                     <p>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
+                        @for (int i = 0; i < @Convert.ToInt32(@Model.Item.Rate); i++)
+                        {
+                            <span class="glyphicon glyphicon-star"></span>
+                        }
+
+                        @for (int i = 0; i < 5 - @Convert.ToInt32(@Model.Item.Rate); i++)
+                        {
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                        }
                         @Model.Item.Rate stars
                     </p>
                 </div>
                 <div class="row">
                     @Ajax.ActionLink("Add to Cart", "AddToCart", "Cart",
-               new { id = @Model.Item.Id, returnUrl = Request.Url.PathAndQuery },
-               new AjaxOptions { HttpMethod = "POST" },
-               new { @class = "btn btn-success center-block", @style= "margin: auto; margin-bot: 5px; max-width: 100px" })
+                        new {id = @Model.Item.Id, returnUrl = Request.Url.PathAndQuery},
+                        new AjaxOptions {HttpMethod = "POST"},
+                        new {@class = "btn btn-success center-block", @style = "margin-left: auto; margin-right: auto; margin-bottom: 10px; max-width: 100px" })
                 </div>
             </div>
             <div class="well">
@@ -120,19 +126,19 @@
                 }
                 @if (@Model.Reviews.Count == 0)
                 {
-                    <p>This items has no reviews yet. Buy it be first to review it!</p>
+                    <p>This items has no reviews yet. Buy it and be first to review!</p>
                 }
                 @foreach (var review in @Model.Reviews)
                 {
                     <hr/>
                     <div class="row">
                         <div class="col-md-12">
-                            @for (int i = 0; i < review.Rate; i++)
+                            @for (int i = 0; i < @Convert.ToInt32(review.Rate); i++)
                             {
                                 <span class="glyphicon glyphicon-star"></span>
                             }
 
-                            @for (int i = 0; i < 5 - review.Rate; i++)
+                            @for (int i = 0; i < 5 - @Convert.ToInt32(@review.Rate); i++)
                             {
                                 <span class="glyphicon glyphicon-star-empty"></span>
                             }
