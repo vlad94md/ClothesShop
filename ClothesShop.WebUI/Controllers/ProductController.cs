@@ -136,16 +136,6 @@ namespace ClothesShop.WebUI.Controllers
                 .Skip((page - 1)*pageSize)
                 .Take(pageSize);
 
-            //List<ItemViewModel> items = new List<ItemViewModel>();
-            //foreach (var item in products)
-            //{
-            //    ItemViewModel modelItem = new ItemViewModel();
-            //    modelItem.Item = item;
-            //    modelItem.ReviewsCount = repository.Reviews.Count(x => x.ProductId == item.Id);
-
-            //    items.Add(modelItem);
-            //}
-
             ProductsListViewModel model = new ProductsListViewModel
             {
                 Products = products,
@@ -164,8 +154,68 @@ namespace ClothesShop.WebUI.Controllers
         }
 
         public ViewResult Recommend(int page = 1)
+        { 
+            string reccomendedCategory = GetReccommendedCategory();
+
+            var products = repository.Products
+            .Where(p => reccomendedCategory == null || p.Category == reccomendedCategory)
+            .OrderBy(Product => Product.Id)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize);
+
+            ProductsListViewModel model = new ProductsListViewModel
+            {
+                Products = products,
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    TotalItems = reccomendedCategory == null ?
+                    repository.Products.Count() :
+                    repository.Products.Where(product => product.Category == reccomendedCategory).Count()
+                },
+                CurrentCategory = reccomendedCategory
+            };
+            return View(model);
+        }
+
+        private string GetReccommendedCategory()
         {
-            return null;
+            var currUser = (User)System.Web.HttpContext.Current.Session["user"];
+
+            var itemsInHistory = repository.Purchases.Where(x => x.UserName == currUser.Username).ToList();
+
+            List<Product> productsInHistory = new List<Product>();
+            foreach (var prod in itemsInHistory)
+            {
+                var product = repository.Products.FirstOrDefault(x => x.Id == prod.ProductId);
+
+                if (product != null)
+                    productsInHistory.Add(product);
+            }
+
+            List<string> categoriesInHistory = new List<string>();
+            foreach (var item in productsInHistory)
+            {
+                if(!categoriesInHistory.Contains(item.Category))
+                    categoriesInHistory.Add(item.Category);
+            }
+
+            string mostRepeatableCategory = null;
+            int counter = 0;
+
+            foreach (var category in categoriesInHistory)
+            {
+                var count = productsInHistory.Count(x => x.Category == category);
+
+                if (count > counter)
+                {
+                    counter = count;
+                    mostRepeatableCategory = category;
+                }
+            }
+
+            return mostRepeatableCategory;
         }
 
         public FileContentResult GetImage(int Id)

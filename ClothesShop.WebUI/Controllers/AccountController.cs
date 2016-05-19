@@ -81,7 +81,12 @@ namespace ClothesShop.WebUI.Controllers
             List<PurchaseViewModel> model = new List<PurchaseViewModel>();
             foreach (var item in purchases)
             {
-                var productName = repository.Products.First(x => x.Id == item.ProductId).Name;
+                var prod = repository.Products.FirstOrDefault(x => x.Id == item.ProductId);
+                
+                if(prod == null)
+                    continue;
+
+                string productName = prod.Name;
 
                 model.Add(new PurchaseViewModel() {
                     Id = item.Id,

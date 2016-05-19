@@ -204,6 +204,7 @@
     <Content Include="Views\Account\Success.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Account\History.cshtml" />
+    <Content Include="Views\Product\Recommend.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
