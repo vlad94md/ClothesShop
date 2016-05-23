@@ -127,6 +127,51 @@ namespace ClothesShop.WebUI.Controllers
             return View(model);
         }
 
+        public ViewResult Sort(string category, int page = 1, int minPrice = 0, int maxPrice = 0)
+        {
+            ViewBag.category = category;
+
+            var products = String.IsNullOrEmpty(category)
+                ? repository.Products
+                    .Where(x => x.Price > minPrice && x.Price < maxPrice)
+                    .OrderBy(Product => Product.Id)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                : repository.Products.Where(x => x.Price > minPrice && x.Price < maxPrice && x.Category == category)
+                    .OrderBy(Product => Product.Id)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize);
+
+
+            List<ItemViewModel> items = new List<ItemViewModel>();
+            foreach (var item in products)
+            {
+                ItemViewModel modelItem = new ItemViewModel();
+                modelItem.Item = item;
+                modelItem.ReviewsCount = repository.Reviews.Count(x => x.ProductId == item.Id);
+
+                items.Add(modelItem);
+            }
+
+            ProductsListViewModel model = new ProductsListViewModel
+            {
+                Products = products,
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    TotalItems = String.IsNullOrEmpty(category) ?
+                    repository.Products.Where(x => x.Price > minPrice && x.Price < maxPrice).Count() :
+                    repository.Products.Where(x => x.Price > minPrice && x.Price < maxPrice && x.Category == category).Count()
+                },
+                CurrentCategory = category
+            };
+            ViewBag.min = minPrice;
+            ViewBag.max = maxPrice;
+
+            return View(model);
+        }
+
         public ViewResult List(string category, int page = 1)
         {
 

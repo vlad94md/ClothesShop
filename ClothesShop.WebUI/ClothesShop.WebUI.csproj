@@ -205,6 +205,7 @@
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\Account\History.cshtml" />
     <Content Include="Views\Product\Recommend.cshtml" />
+    <Content Include="Views\Product\Sort.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

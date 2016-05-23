@@ -42,46 +42,51 @@
     @foreach (var link in Model)
     {
         @Html.RouteLink(link, new
-        {
-            controller = "Product",
-            action = "List",
-            category = link,
-            page = 1
-        }, new
-        {
-            @class = "list-group-item" + (link == ViewBag.SelectedCategory ? " active" : "")
-
-        })
+   {
+       controller = "Product",
+       action = "List",
+       category = link,
+       page = 1
+   }, new
+   {
+       @class = "list-group-item" + (link == ViewBag.SelectedCategory ? " active" : ""),
+       @Id = (link == ViewBag.SelectedCategory ? "activeCat" : "")
+   })
     }
 
 </div>
 <hr/>
 
-<div>
-    <h3>Sort:</h3>
-    <div class="radio">
-        <label><input type="radio" name="optradio">Cheapest</label>
-    </div>
-    <div class="radio">
-        <label><input type="radio" name="optradio">Expensive</label>
-    </div>
-</div>
-
-
 
 <hr/>
 <h3>Price:</h3>
-<div id="priceSelector" class="row" style="display: none">
-    <b>€ 10</b>
-    <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]" style="display: none"/>
-    <b>€ 1000</b>
-</div>
 
+
+@using (Html.BeginForm("Sort", "Product"))
+{
+
+    <input type="text" id="hiddednCategory" name="category" class="form-control" style="max-width: 35px; display: none" value=""/>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <span>€</span>
+            <input type="text" name="minPrice" class="form-control" style="display: inline-block; max-width: 45px;" value=""/>
+        </div>
+        <div class="col-lg-6">
+            <span>to €</span>
+            <input type="text" name="maxPrice" class="form-control" style="max-width: 45px;" value="" />
+
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                    >>
+                </button>
+            </span>
+        </div>
+        @*</div>*@
+    </div>
+}
 
 <script>
-    $(document).ready(function () { //.ready(function() {
-        var slider = new Slider('#ex2', {});
-
-        $('#priceSelector').show();
-    });
+    var activeCat = $('#activeCat').html();
+    $('#hiddednCategory').val(activeCat);
 </script>

@@ -1,0 +1,32 @@
+﻿@using ClothesShop.WebUI.Models
+@model ProductsListViewModel
+
+@{
+    ViewBag.Title = "Sort";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (@Model.Products.Count() != 0)
+{
+    <div class="row">
+        @foreach (var product in @Model.Products)
+        {
+            @Html.Partial("ProductSummary", product)
+        }
+    </div>
+}
+else
+{
+    <p>Sorry, but no items found by your request.</p>
+}
+
+
+@if (@Model.PagingInfo.TotalPages != 1 && @Model.PagingInfo.TotalPages != 0)
+{
+    <div class="row text-center">
+        <div class="btn-group">
+            @Html.PageLinks(Model.PagingInfo, x => Url.Action("Sort", new { page = x, category = Model.CurrentCategory, minPrice = ViewBag.min, maxPrice = ViewBag.max }))
+        </div>
+    </div>
+    <br />
+}
