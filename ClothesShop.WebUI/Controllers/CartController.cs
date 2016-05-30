@@ -89,14 +89,18 @@ namespace ClothesShop.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 orderProcessor.ProcessOrder(cart, shippingDetails);
-                var currUser = (User)System.Web.HttpContext.Current.Session["user"];
 
-                foreach (var line in cart.Lines)
-                {
-                    repository.SavePurchase(new Purchase()
+                if (System.Web.HttpContext.Current != null && System.Web.HttpContext.Current.Session["user"] != null)
+                { 
+                    var currUser = (User)System.Web.HttpContext.Current.Session["user"];
+
+                    foreach (var line in cart.Lines)
                     {
-                        Date = DateTime.Now, ProductId = line.Item.Id, UserName = currUser.Username, Amount = line.Quantity
-                    });
+                        repository.SavePurchase(new Purchase()
+                        {
+                            Date = DateTime.Now, ProductId = line.Item.Id, UserName = currUser.Username, Amount = line.Quantity
+                        });
+                    }
                 }
                 cart.Clear();
                 return View("Completed");
